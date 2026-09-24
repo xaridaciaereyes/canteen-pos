@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Replace the email below with the owner's login email (keep the quotes).
     function isOwner() {
-      return request.auth != null && request.auth.token.email == "YOUR-OWNER-EMAIL@example.com";
+      return request.auth != null && request.auth.token.email == "xaridaciaereyes@gmail.com";
     }
     // A staff account the owner created and has not turned off.
     function isMember() {
