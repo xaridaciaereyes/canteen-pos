@@ -342,7 +342,6 @@ function renderLogin(err) {
     <label>Password<input class="input big" type="password" name="pw" required autocomplete="current-password"></label>
     <p class="err">${esc(err || '')}</p>
     <button class="btn primary big full" type="submit">Sign in</button>
-    ${Store.mode === 'local' ? `<p class="muted small">Demo mode — username <b>owner</b>, password <b>${DEFAULT_PASSWORD}</b></p>` : ''}
   </form></div>`;
   $('#loginForm').addEventListener('submit', async e => {
     e.preventDefault();
