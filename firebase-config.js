@@ -21,4 +21,4 @@ window.FIREBASE_CONFIG = null;
 
 // The owner's login email (the one you created in Firebase > Authentication).
 // This account can open everything and create accounts for the staff.
-window.OWNER_EMAIL = "";
+window.OWNER_EMAIL = "xaridaciaereyes@gmail.com";
