@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Replace the email below with the owner's login email (keep the quotes).
+    function isOwner() {
+      return request.auth != null && request.auth.token.email == "YOUR-OWNER-EMAIL@example.com";
+    }
+    // A staff account the owner created and has not turned off.
+    function isMember() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
+    }
+
+    // Accounts: only the owner can create or change them. Each person can read their own.
+    match /users/{uid} {
+      allow read: if isOwner() || (request.auth != null && request.auth.uid == uid);
+      allow write: if isOwner();
+    }
+
+    // Settings (prices, passwords): everyone signed in can read, only the owner can change.
+    match /settings/{doc} {
+      allow read: if isOwner() || isMember();
+      allow write: if isOwner();
+    }
+
+    // Everyday data.
+    match /{col}/{docId} {
+      allow read, write: if (isOwner() || isMember())
+        && col in ['dishes', 'menus', 'orders', 'inventory', 'reports', 'attendance', 'employees', 'expenses', 'targets', 'ratings'];
+    }
+  }
+}
